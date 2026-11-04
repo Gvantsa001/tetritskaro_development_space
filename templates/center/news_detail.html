@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block title %}{{ item.title }} | თეთრიწყარო{% endblock %}
+{% block content %}<article class="detail-page"><a class="text-link" href="{% url 'news_list' %}">← ყველა სიახლე</a><time>{{ item.published_at|date:"d.m.Y" }}</time><h1>{{ item.title }}</h1><p class="lead">{{ item.summary }}</p>{% if item.image_url %}<img class="detail-image" src="{{ item.image_url }}" alt="">{% endif %}<div class="prose">{{ item.body|linebreaks }}</div></article>{% endblock %}

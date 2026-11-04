@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">ახალგაზრდობა · განვითარება · შესაძლებლობები</span>
+    <h1>ერთად ვქმნით<br><em>უკეთეს მომავალს</em></h1>
+    <p>სივრცე იდეებისთვის, ადამიანებისთვის და ინიციატივებისთვის, რომლებიც თეთრიწყაროს განვითარებას ემსახურება.</p>
+    <div class="hero-actions"><a class="button button-light" href="{% url 'events_list' %}">ღონისძიებები <span>↗</span></a><a class="button button-outline" href="{% url 'join' %}">შემოგვიერთდი</a></div>
+  </div>
+  <div class="hero-note"><span class="note-dot"></span> შენი იდეა მნიშვნელოვანია</div>
+</section>
+<section class="section">
+  <div class="section-heading"><div><span class="eyebrow">რა ხდება ჩვენს გარშემო</span><h2>სიახლეები</h2></div><a class="text-link" href="{% url 'news_list' %}">ყველა სიახლე ↗</a></div>
+  <div class="cards">
+  {% for item in news %}
+    <article class="card">
+      {% if item.image_url %}<img class="card-image" src="{{ item.image_url }}" alt="">{% else %}<div class="card-image image-placeholder">თეთრიწყარო</div>{% endif %}
+      <div class="card-body"><time>{{ item.published_at|date:"d.m.Y" }}</time><h3><a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a></h3><p>{{ item.summary }}</p><a class="text-link" href="{% url 'news_detail' item.pk %}">ვრცლად ↗</a></div>
+    </article>
+  {% empty %}<p class="empty">სიახლეები მალე დაემატება.</p>{% endfor %}
+  </div>
+</section>
+<section class="section section-tint">
+  <div class="section-heading"><div><span class="eyebrow">დაგეგმე მონაწილეობა</span><h2>მომავალი ღონისძიებები</h2></div><a class="text-link" href="{% url 'events_list' %}">ყველა ღონისძიება ↗</a></div>
+  <div class="event-list">
+  {% for event in events %}
+    <article class="event-row"><div class="event-date"><strong>{{ event.starts_at|date:"d" }}</strong><span>{{ event.starts_at|date:"M Y" }}</span></div><div class="event-info"><h3><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></h3><p>{{ event.starts_at|date:"H:i" }} · {{ event.location }}</p><p>{{ event.summary }}</p></div><a class="round-link" href="{% url 'event_detail' event.pk %}" aria-label="ღონისძიების ნახვა">↗</a></article>
+  {% empty %}<p class="empty">მომავალი ღონისძიებები ჯერ არ არის გამოქვეყნებული.</p>{% endfor %}
+  </div>
+</section>
+<section class="section">
+  <div class="section-heading"><div><span class="eyebrow">შენი შემდეგი ნაბიჯი</span><h2>შესაძლებლობები</h2></div><a class="text-link" href="{% url 'opportunities' %}">ყველა შესაძლებლობა ↗</a></div>
+  <div class="opportunity-grid">
+  {% for item in opportunities %}<article class="opportunity-card"><span class="pill">{{ item.category }}</span><h3>{{ item.title }}</h3><p>{{ item.description|truncatewords:24 }}</p>{% if item.deadline %}<small>ბოლო ვადა: {{ item.deadline|date:"d.m.Y" }}</small>{% endif %}{% if item.application_url %}<a class="text-link" href="{{ item.application_url }}" target="_blank" rel="noopener">დეტალები და განაცხადი ↗</a>{% endif %}</article>{% empty %}<p class="empty">შესაძლებლობები მალე დაემატება.</p>{% endfor %}
+  </div>
+</section>
+<section class="join-banner"><div><span class="eyebrow">შენი ხმა მნიშვნელოვანია</span><h2>გაქვს იდეა თეთრიწყაროსთვის?</h2><p>გაგვიზიარე შენი ინიციატივა და გახდი ცვლილების ნაწილი.</p></div><a class="button button-light" href="{% url 'join' %}">იდეის გაზიარება ↗</a></section>
+{% endblock %}

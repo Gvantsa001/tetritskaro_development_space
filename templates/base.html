@@ -1,0 +1,43 @@
+{% load static %}
+<!doctype html>
+<html lang="ka">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}თეთრიწყარო — განვითარების სივრცე{% endblock %}</title>
+  <meta name="description" content="თეთრიწყაროს ახალგაზრდობისა და რეგიონული განვითარების პლატფორმა.">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{% url 'home' %}"><span class="brand-mark">თ</span><span>თეთრიწყარო<small>განვითარების სივრცე</small></span></a>
+  <button class="menu-toggle" aria-label="მენიუს გახსნა" aria-expanded="false">☰</button>
+  <nav class="nav">
+    <a href="{% url 'news_list' %}">სიახლეები</a>
+    <a href="{% url 'events_list' %}">ღონისძიებები</a>
+    <a href="{% url 'opportunities' %}">შესაძლებლობები</a>
+    <a href="{% url 'projects' %}">პროექტები</a>
+    <a href="{% url 'about' %}">ჩვენ შესახებ</a>
+    <a class="nav-cta" href="{% url 'join' %}">შემოგვიერთდი</a>
+  </nav>
+</header>
+<main>
+  {% if messages %}<div class="messages">{% for message in messages %}<p class="message">{{ message }}</p>{% endfor %}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">
+  <div><a class="brand footer-brand" href="{% url 'home' %}"><span class="brand-mark">თ</span><span>თეთრიწყარო<small>განვითარების სივრცე</small></span></a><p>ერთად ვქმნით უკეთეს მომავალს.</p></div>
+  <div><strong>ნავიგაცია</strong><a href="{% url 'news_list' %}">სიახლეები</a><a href="{% url 'events_list' %}">ღონისძიებები</a><a href="{% url 'join' %}">შემოგვიერთდი</a></div>
+  <div><strong>კონტაქტი</strong><p>ელფოსტა: დაამატეთ საკონტაქტო მისამართი</p><p>თეთრიწყარო, საქართველო</p></div>
+  <div class="copyright">© {% now "Y" %} თეთრიწყარო — განვითარების სივრცე</div>
+</footer>
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+if (toggle) toggle.addEventListener('click', () => {
+  const opened = nav.classList.toggle('nav-open');
+  toggle.setAttribute('aria-expanded', String(opened));
+});
+</script>
+</body>
+</html>
